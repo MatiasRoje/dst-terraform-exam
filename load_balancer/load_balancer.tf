@@ -27,9 +27,9 @@ resource "aws_lb_target_group" "web_tg" {
   vpc_id   = var.vpc_id
 
   health_check {
-    path                = "/"
+    path                = "/wp-admin/install.php"
     protocol            = "HTTP"
-    matcher             = "200-299"
+    matcher             = "200,301,302"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 3

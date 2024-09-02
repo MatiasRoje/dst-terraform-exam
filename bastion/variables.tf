@@ -1,5 +1,5 @@
 variable "ssh_key_name" {
-  description = "The SSH key name for EC2 instances"
+  description = "The SSH key name for the bastion"
   type        = string
   default     = "mr-bastion"
 }

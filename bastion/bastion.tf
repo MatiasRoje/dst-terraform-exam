@@ -22,16 +22,27 @@ resource "aws_network_acl" "datascientest_public_a" {
 resource "aws_network_acl" "datascientest_public_b" {
   vpc_id = var.vpc_id
 
-  subnet_ids = [var.public_subnet_a_id]
+  subnet_ids = [var.public_subnet_b_id]
 
   tags = {
     Name = "mr-acl-datascientest-public-b"
   }
 }
 
-resource "aws_network_acl_rule" "nat_inbound" {
+resource "aws_network_acl_rule" "allow_ssh_inbound_a" {
   network_acl_id = aws_network_acl.datascientest_public_a.id
-  rule_number    = 200
+  rule_number    = 100
+  egress         = false
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 22
+  to_port        = 22
+}
+
+resource "aws_network_acl_rule" "allow_all_inbound_a" {
+  network_acl_id = aws_network_acl.datascientest_public_a.id
+  rule_number    = 101
   egress         = false
   protocol       = "-1"
   rule_action    = "allow"
@@ -40,9 +51,42 @@ resource "aws_network_acl_rule" "nat_inbound" {
   to_port        = 0
 }
 
-resource "aws_network_acl_rule" "nat_inboundb" {
+resource "aws_network_acl_rule" "allow_all_outbound_a" {
+  network_acl_id = aws_network_acl.datascientest_public_a.id
+  rule_number    = 100
+  egress         = true
+  protocol       = "-1"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 0
+  to_port        = 0
+}
+
+resource "aws_network_acl_rule" "allow_ssh_inbound_b" {
   network_acl_id = aws_network_acl.datascientest_public_b.id
-  rule_number    = 200
+  rule_number    = 100
+  egress         = false
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 22
+  to_port        = 22
+}
+
+resource "aws_network_acl_rule" "allow_all_inbound_b" {
+  network_acl_id = aws_network_acl.datascientest_public_b.id
+  rule_number    = 101
+  egress         = false
+  protocol       = "-1"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 0
+  to_port        = 0
+}
+
+resource "aws_network_acl_rule" "allow_all_outbound_b" {
+  network_acl_id = aws_network_acl.datascientest_public_b.id
+  rule_number    = 100
   egress         = true
   protocol       = "-1"
   rule_action    = "allow"

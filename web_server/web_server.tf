@@ -2,6 +2,8 @@ resource "aws_launch_template" "web_server" {
   name          = "mr-wordpress-lt"
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
+  key_name       = var.ssh_key_name
+
   user_data = base64encode(templatefile("${path.module}/install-wordpress.sh", {
     db_name          = var.db_name
     db_username      = var.db_user

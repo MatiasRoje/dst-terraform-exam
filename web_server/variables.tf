@@ -44,3 +44,9 @@ variable "private_subnet_b_id" {
   description = "ID of the second private subnet"
   type        = string
 }
+
+variable "ssh_key_name" {
+  description = "The SSH key name for the instances"
+  type        = string
+  default     = "mr-instances"
+}
