@@ -1,5 +1,8 @@
 # nat gateway a
 resource "aws_eip" "eip_public_a" {
+  tags = {
+    Name = "mr-eip-a"
+  }
 }
 
 resource "aws_nat_gateway" "gw_public_a" {
@@ -31,6 +34,9 @@ resource "aws_route_table_association" "rta_subnet_association_appa" {
 
 # nat gateway b
 resource "aws_eip" "eip_public_b" {
+  tags = {
+    Name = "mr-eip-b"
+  }
 }
 
 resource "aws_nat_gateway" "gw_public_b" {

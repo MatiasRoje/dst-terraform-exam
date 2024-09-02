@@ -1,31 +1,26 @@
 variable "cidr_vpc" {
   description = "VPC's CIDR"
   default     = "10.1.0.0/16"
-
 }
 
 variable "cidr_public_subnet_a" {
   description = "CIDR of public Subnet a"
   default     = "10.1.0.0/24"
-
 }
 
 variable "cidr_public_subnet_b" {
   description = "CIDR of public subnet b"
   default     = "10.1.1.0/24"
-
 }
 
 variable "cidr_private_subnet_a" {
   description = "CIDR of private Subnet a"
   default     = "10.1.2.0/24"
-
 }
 
 variable "cidr_private_subnet_b" {
   description = "CIDR of private Subnet b"
   default     = "10.1.3.0/24"
-
 }
 
 variable "az_a" {
@@ -43,6 +38,18 @@ variable "ssh_key_name" {
   description = "The SSH key name for EC2 instances"
   type        = string
   default     = "mr-bastion"
+}
+
+variable "db_name" {
+  description = "The name for the wordpress DB in MariaDB"
+  type        = string
+  default     = "wpdb"
+}
+
+variable "db_user" {
+  description = "The user for the MariaDB instance"
+  type        = string
+  default     = "wpuser"
 }
 
 variable "db_password" {

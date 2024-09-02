@@ -7,12 +7,13 @@ resource "aws_db_subnet_group" "my_db_subnet_group" {
   }
 }
 
-resource "aws_db_instance" "mariadb" {
-  db_name           = "wordpress_db"
+resource "aws_db_instance" "wordpressdb" {
+  identifier        = "mr-mariadb"
   engine            = "mariadb"
   instance_class    = "db.t3.micro"
-  allocated_storage = 10
-  username          = "admin"
+  allocated_storage = 20
+  db_name           = var.db_name
+  username          = var.db_user
   password          = var.db_password
 
   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name

@@ -1,9 +1,15 @@
 resource "aws_launch_template" "web_server" {
-  name                   = "mr-wordpress-lt"
-  image_id               = data.aws_ami.amazon_linux.id
-  instance_type          = "t2.micro"
+  name          = "mr-wordpress-lt"
+  image_id      = data.aws_ami.amazon_linux.id
+  instance_type = "t2.micro"
+  user_data = base64encode(templatefile("install-wordpress.sh", {
+    db_name          = var.db_name
+    db_username      = var.db_user
+    db_user_password = var.db_password
+    db_RDS           = aws_db_instance.wordpressdb.endpoint
+  }))
+
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  # user_data = file("wordpress_install.sh")
 }
 
 resource "aws_autoscaling_group" "web_asg" {

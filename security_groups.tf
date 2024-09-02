@@ -2,6 +2,7 @@
 resource "aws_security_group" "web_sg" {
   name   = "web-sg"
   vpc_id = aws_vpc.main.id
+
   tags = {
     Name = "web-sg"
   }

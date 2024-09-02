@@ -25,11 +25,16 @@ resource "aws_lb_target_group" "web_tg" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
-}
 
-resource "aws_autoscaling_attachment" "lb_attachment" {
-  autoscaling_group_name = aws_autoscaling_group.web_asg.id
-  elb                    = aws_lb.web_lb.id
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    matcher             = "200-299"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+  }
 }
 
 resource "aws_autoscaling_attachment" "tg_attachment" {
