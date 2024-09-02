@@ -33,27 +33,3 @@ variable "az_b" {
   default     = "eu-west-3b"
 
 }
-
-variable "ssh_key_name" {
-  description = "The SSH key name for EC2 instances"
-  type        = string
-  default     = "mr-bastion"
-}
-
-variable "db_name" {
-  description = "The name for the wordpress DB in MariaDB"
-  type        = string
-  default     = "wpdb"
-}
-
-variable "db_user" {
-  description = "The user for the MariaDB instance"
-  type        = string
-  default     = "wpuser"
-}
-
-variable "db_password" {
-  description = "The password for the MariaDB instance"
-  type        = string
-  sensitive   = true
-}

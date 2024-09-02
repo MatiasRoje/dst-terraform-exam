@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "my_db_subnet_group" {
   name       = "mr-db-subnet-group"
-  subnet_ids = [aws_subnet.private_subnet_a.id, aws_subnet.private_subnet_b.id]
+  subnet_ids = [var.private_subnet_a_id, var.private_subnet_b_id]
 
   tags = {
     Name = "MR DB Subnet Group"
@@ -17,7 +17,7 @@ resource "aws_db_instance" "wordpressdb" {
   password          = var.db_password
 
   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
-  vpc_security_group_ids = [aws_security_group.db_sg.id]
+  vpc_security_group_ids = [var.db_sg_id]
 
   skip_final_snapshot = true
 

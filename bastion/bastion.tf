@@ -1,18 +1,18 @@
 resource "aws_instance" "bastion" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.public_subnet_a.id
+  subnet_id              = var.public_subnet_a_id
   key_name               = var.ssh_key_name
-  vpc_security_group_ids = [aws_security_group.bastion_sg.id]
+  vpc_security_group_ids = [var.bastion_sg_id]
   tags = {
     Name = "mr-bastion-host"
   }
 }
 
 resource "aws_network_acl" "datascientest_public_a" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
 
-  subnet_ids = [aws_subnet.public_subnet_a.id]
+  subnet_ids = [var.public_subnet_a_id]
 
   tags = {
     Name = "mr-acl-datascientest-public-a"
@@ -20,9 +20,9 @@ resource "aws_network_acl" "datascientest_public_a" {
 }
 
 resource "aws_network_acl" "datascientest_public_b" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
 
-  subnet_ids = [aws_subnet.public_subnet_b.id]
+  subnet_ids = [var.public_subnet_a_id]
 
   tags = {
     Name = "mr-acl-datascientest-public-b"

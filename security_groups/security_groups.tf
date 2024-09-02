@@ -1,7 +1,7 @@
 # web sg
 resource "aws_security_group" "web_sg" {
   name   = "web-sg"
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
 
   tags = {
     Name = "web-sg"
@@ -29,7 +29,7 @@ resource "aws_security_group_rule" "outbound_allow_all" {
 # db sg
 resource "aws_security_group" "db_sg" {
   name   = "db-sg"
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 3306
@@ -52,7 +52,7 @@ resource "aws_security_group" "db_sg" {
 
 resource "aws_security_group" "lb_sg" {
   name   = "lb-sg"
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -76,7 +76,7 @@ resource "aws_security_group" "lb_sg" {
 # bastion-sg
 resource "aws_security_group" "bastion_sg" {
   name   = "bastion-sg"
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 22

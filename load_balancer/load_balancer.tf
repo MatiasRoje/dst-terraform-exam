@@ -3,8 +3,8 @@ resource "aws_lb" "web_lb" {
   internal           = false
   load_balancer_type = "application"
 
-  subnets         = [aws_subnet.public_subnet_a.id, aws_subnet.public_subnet_b.id]
-  security_groups = [aws_security_group.lb_sg.id]
+  subnets         = [var.public_subnet_a_id, var.public_subnet_b_id]
+  security_groups = [var.lb_sg_id]
 
   enable_deletion_protection = false
 }
@@ -24,7 +24,7 @@ resource "aws_lb_target_group" "web_tg" {
   name     = "web-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = aws_vpc.main.id
+  vpc_id   = var.vpc_id
 
   health_check {
     path                = "/"
@@ -38,6 +38,6 @@ resource "aws_lb_target_group" "web_tg" {
 }
 
 resource "aws_autoscaling_attachment" "tg_attachment" {
-  autoscaling_group_name = aws_autoscaling_group.web_asg.id
+  autoscaling_group_name = var.web_asg_id
   lb_target_group_arn    = aws_lb_target_group.web_tg.arn
 }
